@@ -38,6 +38,24 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
+                            <label for="role" class="col-md-4 control-label">Role</label>
+
+                            <div class="col-md-6">
+                                <label class="radio-inline"><input type="radio" value="admin" name="role">Admin</label>
+                                <label class="radio-inline"><input type="radio" value="teamlead" name="role">Team-lead</label>
+                                <label class="radio-inline"><input type="radio" name="perfomer">Perfomer</label>
+
+                                @if ($errors->has('role'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('role') }}</strong>
+                                    </span>
+                                @endif
+
+                            </div>
+                        </div>
+
+
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 

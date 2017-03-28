@@ -1,0 +1,22 @@
+html{
+    -webkit-tap-highlight-color: transparent;
+    line-height: 1.15;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+.auth-link {
+    border-bottom: 1px dashed #a6a6a6;
+    color: #a6a6a6;
+}
+
+.auth-link:hover {
+    text-decoration: none;
+    color: #000;
+    border-color: #000;
+}
+
+.splash {
+    width: 120px;
+    margin-bottom: 32px;
+}
