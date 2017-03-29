@@ -9,7 +9,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class TaskController extends Controller
+class TaskApiController extends Controller
 {
 
     public function __construct() {
@@ -19,25 +19,10 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function index() {
-        $one = Task::find(1);
-
-        $tasks = Task::paginate(5);
-
-        return view("task.index")
-            ->with("users",User::all())
-            ->with("tasks",$tasks);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
-        return view("task.create");
+        return Task::all();
     }
 
     /**
@@ -63,17 +48,7 @@ class TaskController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id) {
-        return view("task.show")->with("task",Task::find($id));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function edit($id) {
-        return view("task.edit")->with("task",Task::find($id));
+        return Task::find($id);
     }
 
     /**
@@ -88,7 +63,7 @@ class TaskController extends Controller
         $task->name = $request->name;
         $task->description = $request->description;
         $task->save();
-        return redirect("/tasks/$id")->with("status","Update successful");
+        return "success";
     }
 
     /**
@@ -99,6 +74,6 @@ class TaskController extends Controller
      */
     public function destroy($id) {
         Task::destroy($id);
-        return redirect()->back();
+        return "success";
     }
 }
