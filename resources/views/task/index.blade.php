@@ -1,15 +1,11 @@
 @extends('layouts.app')
-@section("css")
-    <link href="/vendor/sliptree-bootstrap-tokenfield-9c06df4/dist/css/bootstrap-tokenfield.css" rel="stylesheet">
-    <link href="/vendor/sliptree-bootstrap-tokenfield-9c06df4/dist/css/tokenfield-typeahead.css" rel="stylesheet">
-    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
-@endsection
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <div class="card">
                     <div class="alert alert-success" id="alert-success">
+                    asdasd
                     </div>
                     <div class="card-header" style="display: flex">
                         <div style="flex-basis: 10%">
@@ -31,38 +27,33 @@
                                 <th>Date</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            @foreach($tasks as $task)
-                                <tr>
-                                    <td><a href="/tasks/{{$task->id}}">{{$task->name}}</a></td>
+                            <tbody id="app">
+                                <tr v-for="task in tasks">
+                                    <td><a href="@{{ task.id }}">@{{ task.name }}</a></td>
                                     <td>
                                         <input type="text"
                                                class="form-control"
-                                               data-task="{{$task->id}}"
+                                               data-task="@{{ task.id }}"
                                                id="tokenfield"
-                                               {{--value="{{dd($task->users()->get(["name"])->toArray())}}"--}}
                                                placeholder="Choose name and hit enter"/>
                                     </td>
-                                    <td>{{$task->updated_at}}</td>
+                                    <td>@{{ task.updated_at }}</td>
                                     <td>
-                                        <a href="/tasks/{{$task->id}}"
+                                        <a href="/tasks/@{{ task.id }}"
                                            onclick="event.preventDefault();
                                                      document.getElementById('remove-form').submit();">
                                             <i class="fa fa-close"></i>
                                         </a>
 
-                                        <form id="remove-form" action="/tasks/{{$task->id}}" method="POST"
+                                        <form id="remove-form" action="/tasks/@{{ task.id }}" method="POST"
                                               style="display: none;">
                                             {{ csrf_field() }}
-                                            {{method_field("DELETE")}}
+                                            {{ method_field("DELETE") }}
                                         </form>
                                     </td>
                                 </tr>
-                            @endforeach
                             </tbody>
                         </table>
-
-                        {{ $tasks->links('vendor.pagination.bootstrap-4') }}
                     </div>
                 </div>
             </div>
@@ -71,12 +62,24 @@
 @endsection
 
 @section("js")
-    <script
-            src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
-            integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
-            crossorigin="anonymous"></script>
-    <script src="/vendor/sliptree-bootstrap-tokenfield-9c06df4/dist/bootstrap-tokenfield.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
     <script>
+        var app = new Vue({
+          el: '#app',
+          data: {
+            message: 'Hello Vue!',
+            tasks: []
+          },
+          created: function () {
+            var self = this;
+            axios.get('/api/tasks').then(function (response) {
+                self.tasks = response.data;
+            });
+          }
+        })
+    </script>
+    <!--script>
         $.get("/api/users",data =>{
             $('#tokenfield').on('tokenfield:createtoken',(e) => {
 
@@ -96,10 +99,10 @@
             });
         });
 
-        $("#alert-success").hide();
+        // $("#alert-success").hide();
         $("#user-option").on("change", e => {
 
         })
 
-    </script>
+    </script-->
 @endsection
