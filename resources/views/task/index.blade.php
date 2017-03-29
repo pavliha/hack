@@ -41,6 +41,7 @@
                                                class="form-control"
                                                data-task="{{$task->id}}"
                                                id="tokenfield"
+                                               {{--value="{{dd($task->users()->get(["name"])->toArray())}}"--}}
                                                placeholder="Choose name and hit enter"/>
                                     </td>
                                     <td>{{$task->updated_at}}</td>
@@ -85,7 +86,6 @@
                     user: e.attrs.value,
                     _token: Laravel.csrfToken
                 }).done(() => {
-                    $("#alert-success").show().html("Update successful");
                 });
 
             }).tokenfield({
