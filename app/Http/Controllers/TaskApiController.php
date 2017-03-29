@@ -35,10 +35,10 @@ class TaskApiController extends Controller
         $task = new Task();
         $task->name = $request->name;
         $task->description = $request->description;
+        $task->completed = 0;
         $task->save();
 
         return "success";
-
     }
 
     /**
@@ -62,8 +62,9 @@ class TaskApiController extends Controller
         $task = Task::find($id);
         $task->name = $request->name;
         $task->description = $request->description;
+        $task->completed = $request->completed;
         $task->save();
-        return "success";
+        return "success s";
     }
 
     /**
