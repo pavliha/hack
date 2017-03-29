@@ -15,6 +15,8 @@ use App\Task;
 use App\User;
 use Illuminate\Http\Request;
 
+Route::get('/logout', 'Auth\LoginController@logout');
+
 Route::get('/', function () {
     return redirect("/tasks");
 });
