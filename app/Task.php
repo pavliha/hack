@@ -23,11 +23,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Task extends Model
 {
+    protected $casts = [
+        'completed' => 'boolean',
+    ];
+
     public function users(){
         return $this->belongsToMany(User::class);
     }
 
-    public  function getUpdatedAtAttribute($value){
+    public function getUpdatedAtAttribute($value) {
         return Carbon::parse($value)->diffForHumans();
     }
 }
