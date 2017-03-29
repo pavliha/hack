@@ -32,7 +32,13 @@ Route::resource("/api/users", "UsersApiController");
 
 Route::post("/api/task/assign", function (Request $request) {
     $task = Task::find($request->task);
-    $task->users()->attach($request->user);
+
+    if (is_numeric($request->user)) {
+        $task->users()->detach($request->user);
+    }else{
+        $user = User::where("name" ,$request->user)->get()[0];
+        $task->users()->attach($user->id);
+    }
 });
 
 Route::post("/api/task/detach", function (Request $request) {
@@ -41,7 +47,7 @@ Route::post("/api/task/detach", function (Request $request) {
     if (is_numeric($request->user)) {
         $task->users()->detach($request->user);
     }else{
-        $user = User::where("name" ,$request->user);
-        $task->users()->detach($user);
+        $user = User::where("name" ,$request->user)->get()[0];
+        $task->users()->detach($user->id);
     }
 });
