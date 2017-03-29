@@ -7,11 +7,11 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
+            <div class="col-md-8 offset-md-2">
+                <div class="card">
                     <div class="alert alert-success" id="alert-success">
                     </div>
-                    <div class="panel-heading" style="display: flex">
+                    <div class="card-header" style="display: flex">
                         <div style="flex-basis: 10%">
                             @if (Auth::guest())
                                 Task list
@@ -21,9 +21,8 @@
                         </div>
                         <p style="flex-basis: 90%;padding-top: 5px">
                         </p>
-
                     </div>
-                    <div class="panel-body">
+                    <div class="card-block">
                         <table class="table">
                             <thead>
                             <tr>
