@@ -54,20 +54,6 @@
                         <a class="nav-link" href="{{ route('register') }}">Register</a>
                     </li>
                     @else
-<<<<<<< HEAD
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="/logout">Logout</a>
-                                </li>
-                            </ul>
-                        </li>
-=======
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="http://example.com" data-toggle="dropdown">{{ Auth::user()->name }} <span class="caret"></span></a>
                         <div class="dropdown-menu">
@@ -75,7 +61,6 @@
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
                         </div>
                     </li>
->>>>>>> 4b4c37a714e74fd896f5570c7f17a9239a212f17
                     @endif
                 </ul>
             </div>

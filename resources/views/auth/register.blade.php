@@ -43,17 +43,17 @@
 
                             <div class="col-sm-8">
                                 <label class="custom-control custom-radio">
-                                  <input name="radio" type="radio" class="custom-control-input" value="admin" name="role">
+                                  <input type="radio" class="custom-control-input" value="admin" name="role">
                                   <span class="custom-control-indicator"></span>
                                   <span class="custom-control-description">Admin</span>
                                 </label>
                                 <label class="custom-control custom-radio">
-                                  <input name="radio" type="radio" class="custom-control-input" value="teamlead" name="role">
+                                  <input type="radio" class="custom-control-input" value="teamlead" name="role">
                                   <span class="custom-control-indicator"></span>
                                   <span class="custom-control-description">Team-lead</span>
                                 </label>
                                 <label class="custom-control custom-radio">
-                                  <input name="radio" type="radio" class="custom-control-input" value="perfomer" name="role" checked>
+                                  <input type="radio" class="custom-control-input" value="perfomer" name="role" checked>
                                   <span class="custom-control-indicator"></span>
                                   <span class="custom-control-description">Perfomer</span>
                                 </label>
