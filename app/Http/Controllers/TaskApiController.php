@@ -22,7 +22,7 @@ class TaskApiController extends Controller
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function index() {
-        return Task::all();
+        return Task::with('users')->get(); 
     }
 
     /**
@@ -48,7 +48,7 @@ class TaskApiController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id) {
-        return Task::find($id);
+        return Task::with('users')->where('id', $id)->get();
     }
 
     /**
