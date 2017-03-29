@@ -20,3 +20,73 @@ html{
     width: 120px;
     margin-bottom: 32px;
 }
+
+body {
+    padding-top: 88px;
+}
+
+/* === TASK === */
+
+.task {
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+    margin-bottom: 8px;
+    border-radius: 2px;
+}
+
+.custom-checkbox {
+    margin-bottom: 0;
+    margin-right: 8px;
+}
+
+.task .task-body {
+    display: none;
+    padding-left: 32px;
+}
+
+.task-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.task.done .task-text {
+    text-decoration: line-through;
+}
+
+.task.opened .task-text {
+    white-space: normal;
+}
+
+.task.opened .task-body {
+    display: block;
+}
+
+.task.opened {
+    border-color: #0275d8;
+}
+
+.task-footer {
+    font-size: 14px;
+    color: #848484;
+    font-style: italic;
+    margin-top: 8px;
+}
+
+.task-footer span {
+    margin-right: 8px;
+}
+
+.task-footer .action {
+    background: transparent;
+    border: none;
+    margin: 0;
+    margin-right: 8px;
+    padding: 0;
+    font-size: 14px;
+    color: #848484;
+    font-style: italic;
+    outline: none;
+    cursor: pointer;
+}

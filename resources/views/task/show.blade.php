@@ -3,14 +3,14 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-8 offset-md-2">
                 @if (session('status'))
                     <div class="alert alert-success">
                         {{ session('status') }}
                     </div>
                 @endif
-                <div class="panel panel-default">
-                    <div class="panel-heading" style="display: flex">
+                <div class="card">
+                    <div class="card-header" style="display: flex">
                         <p style="flex-basis: 90%;padding-top: 5px">
                             {{$task->name}}
                         </p>
@@ -22,7 +22,7 @@
                         </div>
                     </div>
 
-                    <div class="panel-body">
+                    <div class="card-block">
                         {{$task->description}}
                     </div>
                     <div class="panel-footer">
