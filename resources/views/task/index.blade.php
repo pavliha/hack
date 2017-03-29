@@ -1,24 +1,36 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container">
+    <div id="app" class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <div class="card">
-                    <div class="alert alert-success" id="alert-success">
-                    asdasd
-                    </div>
                     <div class="card-header" style="display: flex">
-                        <div style="flex-basis: 10%">
-                            @if (Auth::guest())
-                                Task list
-                            @elseif(auth()->user()->hasRole("admin"))
+                        <div>
+                            @if(auth()->user()->hasRole("admin"))
                                 <a class="btn btn-primary btn-block" href="/tasks/create">Create task</a>
+                            @else
+                                <span>Task list</span>
                             @endif
                         </div>
-                        <p style="flex-basis: 90%;padding-top: 5px">
-                        </p>
                     </div>
                     <div class="card-block">
+                        <div v-for="task in tasks" class="task">
+                          <div class="row no-gutters">
+                            <label class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" v-model="task.done">
+                              <span class="custom-control-indicator"></span>
+                            </label>
+                            <div class="col-sm task-text" @click="onClick()">
+                              <span>@{{ task.name }}</span>
+                            </div>
+                            <div class="col-sm-12 task-body task-footer">
+                              <span>Создано: 8 Март 2017.</span>
+                              <button class="action" data-toggle="modal" data-target="#exampleModal">Назначено: Вам и еще 4.</button>
+                              <span>Редактровать</span>
+                            </div>
+                          </div>
+                        </div>
+                        
                         <table class="table">
                             <thead>
                             <tr>
@@ -27,7 +39,7 @@
                                 <th>Date</th>
                             </tr>
                             </thead>
-                            <tbody id="app">
+                            <tbody>
                                 <tr v-for="task in tasks">
                                     <td><a href="@{{ task.id }}">@{{ task.name }}</a></td>
                                     <td>
