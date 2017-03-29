@@ -44,7 +44,7 @@
                             <div class="col-md-6">
                                 <label class="radio-inline"><input type="radio" value="admin" name="role">Admin</label>
                                 <label class="radio-inline"><input type="radio" value="teamlead" name="role">Team-lead</label>
-                                <label class="radio-inline"><input type="radio" name="perfomer">Perfomer</label>
+                                <label class="radio-inline"><input type="radio" value="perfomer" name="role">Perfomer</label>
 
                                 @if ($errors->has('role'))
                                     <span class="help-block">
