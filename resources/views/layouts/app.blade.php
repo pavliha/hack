@@ -27,11 +27,9 @@
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
-
         ]) !!};
-
         @if(!Auth::guest())
-            window.Laravel = {!! json_encode(['user_id' => Auth::user()->id])!!}
+            window.Laravel.user_id = {{ Auth::user()->id }}
         @endif
     </script>
 
@@ -48,14 +46,6 @@
             </button>
             <a class="navbar-brand" href="/">{{ config('app.name') }}</a>
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <!--ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <nuxt-link class="nav-link" to="/tasks">Задания</nuxt-link>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Добавить задание</a>
-                    </li>
-                </ul-->
                 <ul class="navbar-nav ml-auto">
                     @if (Auth::guest())
                         <li class="nav-item">
@@ -69,10 +59,7 @@
                             <a class="nav-link dropdown-toggle" href="http://example.com"
                                data-toggle="dropdown">{{ Auth::user()->name }} <span class="caret"></span></a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#"
-                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                      style="display: none;">{{ csrf_field() }}</form>
+                                <a class="dropdown-item" href="/logout">Logout</a>
                             </div>
                         </li>
                     @endif

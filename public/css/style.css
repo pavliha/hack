@@ -1,10 +1,3 @@
-html{
-    -webkit-tap-highlight-color: transparent;
-    line-height: 1.15;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-}
 .auth-link {
     border-bottom: 1px dashed #a6a6a6;
     color: #a6a6a6;
@@ -25,7 +18,7 @@ body {
     padding-top: 88px;
 }
 
-/* === TASK === */
+/* Task */
 
 .task {
     border: 1px solid #ccc;
@@ -97,4 +90,19 @@ body {
     padding-bottom: 4px;
     cursor: text;
     outline: none;
+}
+
+/* Users autocomplete input */
+
+.users-ac {
+    position: absolute;
+    margin-top: 8px;
+    z-index: 200;
+    width: 100%;
+}
+
+.users-ac-wrapper {
+    position: relative;
+    margin-top: 16px;
+    margin-bottom: 0;
 }
