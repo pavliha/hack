@@ -95,10 +95,7 @@
                 var task = this.tasks[idx];
                 axios.put('/api/tasks/' + task.id, {
                     id: task.id,
-                    name: task.name,
-                    description: task.description,
-                    completed: task.completed,
-                    _token: Laravel.csrfToken
+                    completed: task.completed
                 });
             },
             isTaskVisible: function (idx) {
@@ -143,10 +140,7 @@
                 task.name = e.target.textContent;
                 axios.put('/api/tasks/' + task.id, {
                     id: task.id,
-                    name: task.name,
-                    description: task.description,
-                    completed: task.completed,
-                    _token: Laravel.csrfToken
+                    name: task.name
                 });
                 this.editing = false;
             }
