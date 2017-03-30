@@ -15,6 +15,5 @@
 $factory->define(App\Task::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
-        'description' => $faker->text(200),
     ];
 });
