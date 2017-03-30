@@ -10,7 +10,7 @@
                             @if(auth()->user()->hasRole("admin"))
                                 <div>
                                     <a class="btn btn-success" href="/tasks/create">Create task</a>
-                                    <button class="btn btn-primary" :class="{ 'btn-outline-primary': !showAll }" @click="showAll = !showAll">Show all task</button>
+                                    <button class="btn btn-primary" :class="{ 'btn-outline-primary': !showAll }" @click="showAll = !showAll">Show all tasks</button>
                                 </div>
                                 <button class="btn btn-primary" :class="{ 'btn-outline-primary': !showCompleted }" @click="showCompleted = !showCompleted">Show completed</button>
                             @else
@@ -27,13 +27,14 @@
                                 <span class="custom-control-indicator"></span>
                             </label>
                             <div class="col-sm task-text" @click="active = index">
-                                <span>@{{ task.name }}</span>
+                                <span :contenteditable="editing && (active === index)"
+                                    @keyup.enter="editTask">@{{ task.name }}</span>
                             </div>
                         </div>
                         <div class="col-sm-12 task-body task-footer">
                             <span>@{{ task.updated_at }}</span>
                             <button class="action" data-toggle="modal" data-target="#exampleModal">@{{ assignedInfo(index) }}</button>
-                            <a class="action" :href="'/tasks/' + task.id + '/edit'">Edit task</a>
+                            <button class="action" @click="editing = !editing">Edit task</button>
                         </div>
                     </div>
                 </div>
@@ -76,6 +77,7 @@
         data: {
             tasks: [],
             active: -1,
+            editing: false,
             showCompleted: false,
             showAll: false
             // true - задачи назначиные лично вам
@@ -106,6 +108,8 @@
                     return false;
                 if (this.showAll && !this.showCompleted && this.tasks[idx].completed)
                     return false;
+                if (!this.showCompleted && this.tasks[idx].completed)
+                    return false;
                 return true;
             },
             assignedInfo: function (idx) {
@@ -132,6 +136,19 @@
             },
             isSelfAssigned: function (taskIdx) {
                 return this.isUserAssigned(Laravel.user_id, taskIdx);
+            },
+            editTask: function (e) {
+                e.target.innerHTML = e.target.textContent;
+                var task = this.tasks[this.active];
+                task.name = e.target.textContent;
+                axios.put('/api/tasks/' + task.id, {
+                    id: task.id,
+                    name: task.name,
+                    description: task.description,
+                    completed: task.completed,
+                    _token: Laravel.csrfToken
+                });
+                this.editing = false;
             }
         }
     })
