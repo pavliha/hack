@@ -8,5 +8,6 @@ $ git clone https://github.com/pavliha/hack
 ``
 * Create database hack in MySql
 * Check out ``.env`` file and change database connections
+* run command ``php artisan migrate:refresh --seed`` to seed database
 * run command ``php artisan serve`` to run server
 * visit ``localhost:8000``
