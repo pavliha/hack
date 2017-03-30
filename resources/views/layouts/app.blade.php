@@ -22,6 +22,7 @@
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
+            'user_id' => Auth::user()->id
         ]) !!};
     </script>
 

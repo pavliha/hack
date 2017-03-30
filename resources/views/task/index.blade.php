@@ -10,7 +10,7 @@
                             @if(auth()->user()->hasRole("admin"))
                                 <div>
                                     <a class="btn btn-success" href="/tasks/create">Create task</a>
-                                    <a class="btn btn-secondary" href="/tasks/create">Show all task</a>
+                                    <button class="btn btn-primary" :class="{ 'btn-outline-primary': !showAll }" @click="showAll = !showAll">Show all task</button>
                                 </div>
                                 <button class="btn btn-primary" :class="{ 'btn-outline-primary': !showCompleted }" @click="showCompleted = !showCompleted">Show completed</button>
                             @else
@@ -32,7 +32,7 @@
                         </div>
                         <div class="col-sm-12 task-body task-footer">
                             <span>@{{ task.updated_at }}</span>
-                            <button class="action" data-toggle="modal" data-target="#exampleModal">Assigned: You(TODO check) and @{{ task.users.length }} more.</button>
+                            <button class="action" data-toggle="modal" data-target="#exampleModal">@{{ assignedInfo(index) }}</button>
                             <a class="action" :href="'/tasks/' + task.id + '/edit'">Edit task</a>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
             tasks: [],
             active: -1,
             showCompleted: false,
-            personal: true
+            showAll: false
             // true - задачи назначиные лично вам
             // false - все задачи
             //   - для директора: позволяет редактировать и отмечать "готово" не назначеные для него задачи 
@@ -100,16 +100,38 @@
                 });
             },
             isTaskVisible: function (idx) {
-                // the most complicated func ever
-                // TODO: visibility depends on: showCompleted, personal, this.tasks[idx].completed, (user E task.users)
-                if (this.showCompleted && this.tasks[idx].completed) {
-                    return true;
-                } else if (this.showCompleted && this.tasks[idx].completed) {
+                if (!this.showAll && !this.isSelfAssigned(idx))
+                    return false
+                if (this.showCompleted && !this.tasks[idx].completed)
                     return false;
-                } else if (!this.showCompleted && !this.tasks[idx].completed) {
-                    return true;
-                } else return false;
-                // code above is wrong. rewrite!
+                if (this.showAll && !this.showCompleted && this.tasks[idx].completed)
+                    return false;
+                return true;
+            },
+            assignedInfo: function (idx) {
+                var task = this.tasks[idx];
+                var str = '';
+                var selfAssigned = this.isUserAssigned(Laravel.user_id, idx);
+                if (selfAssigned) {
+                    str = 'Assigned: You';
+                    var othersNum = task.users.length - 1;
+                    if (othersNum) {
+                        str += ' and ' + othersNum + ' others';
+                    }
+                } else {
+                    str = 'Assign task';
+                }
+                return str;
+            },
+            isUserAssigned: function (userId, taskIdx) {
+                var exist = false;
+                this.tasks[taskIdx].users.forEach(function (user) {
+                    if (userId === user.id) exist = true;
+                });
+                return exist;
+            },
+            isSelfAssigned: function (taskIdx) {
+                return this.isUserAssigned(Laravel.user_id, taskIdx);
             }
         }
     })
