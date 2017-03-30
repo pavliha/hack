@@ -90,3 +90,11 @@ body {
     outline: none;
     cursor: pointer;
 }
+
+.task-text span[contenteditable="true"] {
+    display: block;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 4px;
+    cursor: text;
+    outline: none;
+}

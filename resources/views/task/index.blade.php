@@ -8,15 +8,11 @@
                         <div class="row justify-content-between no-gutters">
                             @if(!auth()->guest())
                                 @if(auth()->user()->hasRole("admin"))
-                                    <div>s
+                                    <div>
                                         <a class="btn btn-success" href="/tasks/create">Create task</a>
-                                        <button class="btn btn-primary"
-                                                :class="{ 'btn-outline-primary': !showAll }" @click="showAll = !showAll"
-                                        >Show all task</button>
+                                        <button class="btn btn-primary" :class="{ 'btn-outline-primary': !showAll }" @click="showAll = !showAll">Show all tasks</button>
                                     </div>
-                                    <button class="btn btn-primary"
-                                            :class="{ 'btn-outline-primary': !showCompleted }" @click="
-                                    showCompleted = !showCompleted">Show completed</button>
+                                    <button class="btn btn-primary" :class="{ 'btn-outline-primary': !showCompleted }" @click="showCompleted = !showCompleted">Show completed</button>
                                 @else
                                     <span>Task list</span>
                                 @endif
@@ -24,23 +20,21 @@
                         </div>
                     </div>
                     <div class="card-block">
-                        <div v-for="(task, index) in tasks" class="task" :class="{ opened: active === index }"
-                             v-if="isTaskVisible(index)">
+                        <div v-for="(task, index) in tasks" class="task" :class="{ opened: active === index }" v-if="isTaskVisible(index)">
                             <div class="row no-gutters">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" v-model="task.completed" @click=
-                                    "completeTask(index)">
+                                    <input type="checkbox" class="custom-control-input" v-model="task.completed" @click="completeTask(index)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                                 <div class="col-sm task-text" @click="active = index">
-                                <span>@{{ task.name }}</span>
+                                <span :contenteditable="editing && (active === index)"
+                                      @keyup.enter="editTask">@{{ task.name }}</span>
                             </div>
                         </div>
                         <div class="col-sm-12 task-body task-footer">
                             <span>@{{ task.updated_at }}</span>
-                            <button class="action" data-toggle="modal"
-                                    data-target="#exampleModal">@{{ assignedInfo(index) }}</button>
-                            <a class="action" :href="'/tasks/' + task.id + '/edit'">Edit task</a>
+                            <button class="action" data-toggle="modal" data-target="#exampleModal">@{{ assignedInfo(index) }}</button>
+                            <button class="action" @click="editing = !editing">Edit task</button>
                         </div>
                     </div>
                 </div>
@@ -55,8 +49,7 @@
                 </div>
                 <div class="modal-body" v-if="active != -1">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search users (пока-что бесполезное говно)"
-                               autofocus>
+                        <input type="text" class="form-control" placeholder="Search users (пока-что бесполезное говно)" autofocus>
                     </div>
                     <ul class="list-group">
                         <li v-for="user in tasks[active].users" class="list-group-item justify-content-between">
@@ -72,6 +65,7 @@
             </div>
         </div>
     </div>
+    </div>
 @endsection
 
 @section("js")
@@ -83,6 +77,7 @@
             data: {
                 tasks: [],
                 active: -1,
+                editing: false,
                 showCompleted: false,
                 showAll: false
                 // true - задачи назначиные лично вам
@@ -113,6 +108,8 @@
                         return false;
                     if (this.showAll && !this.showCompleted && this.tasks[idx].completed)
                         return false;
+                    if (!this.showCompleted && this.tasks[idx].completed)
+                        return false;
                     return true;
                 },
                 assignedInfo: function (idx) {
@@ -139,6 +136,19 @@
                 },
                 isSelfAssigned: function (taskIdx) {
                     return this.isUserAssigned(Laravel.user_id, taskIdx);
+                },
+                editTask: function (e) {
+                    e.target.innerHTML = e.target.textContent;
+                    var task = this.tasks[this.active];
+                    task.name = e.target.textContent;
+                    axios.put('/api/tasks/' + task.id, {
+                        id: task.id,
+                        name: task.name,
+                        description: task.description,
+                        completed: task.completed,
+                        _token: Laravel.csrfToken
+                    });
+                    this.editing = false;
                 }
             }
         })

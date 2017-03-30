@@ -60,11 +60,14 @@ class TaskApiController extends Controller
      */
     public function update(Request $request, $id) {
         $task = Task::find($id);
-        $task->name = $request->name;
-        $task->description = $request->description;
-        $task->completed = $request->completed;
+        if ($request->has('name')) {
+            $task->name = $request->name;
+        }
+        if ($request->has('completed')) {
+            $task->completed = $request->completed;
+        }
         $task->save();
-        return "success s";
+        return "success";
     }
 
     /**
