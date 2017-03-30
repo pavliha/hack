@@ -66,6 +66,13 @@ class TaskApiController extends Controller
         if ($request->has('completed')) {
             $task->completed = $request->completed;
         }
+        if ($request->has('users')) {
+            $users_id = [];
+            foreach ($request->users as $user) {
+                $users_id[] = $user['id'];
+            }
+            $task->users()->sync($users_id);
+        }
         $task->save();
         return "success";
     }

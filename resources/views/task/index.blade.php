@@ -135,8 +135,7 @@
             assignedInfo: function (idx) {
                 var task = this.tasks[idx];
                 var str = '';
-                var selfAssigned = this.isUserAssigned(Laravel.user_id, idx);
-                if (selfAssigned) {
+                if (this.isSelfAssigned(idx)) {
                     str = 'Assigned: You';
                     var othersNum = task.users.length - 1;
                     if (othersNum) {
