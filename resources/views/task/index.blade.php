@@ -6,17 +6,13 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row justify-content-between no-gutters">
-                        @if(!auth()->guest())
+                        <div>
                             @if(auth()->user()->hasRole("admin"))
-                                <div>
-                                    <a class="btn btn-success" href="/tasks/create">Create task</a>
-                                    <button class="btn btn-primary" :class="{ 'btn-outline-primary': !showAll }" @click="showAll = !showAll">Show all tasks</button>
-                                </div>
-                                <button class="btn btn-primary" :class="{ 'btn-outline-primary': !showCompleted }" @click="showCompleted = !showCompleted">Show completed</button>
-                            @else
-                                <span>Task list</span>
+                            <a class="btn btn-success" href="/tasks/create">Create task</a>
                             @endif
-                        @endif
+                            <button class="btn btn-primary" :class="{ 'btn-outline-primary': !showAll }" @click="showAll = !showAll">Show all tasks</button>
+                        </div>
+                        <button class="btn btn-primary" :class="{ 'btn-outline-primary': !showCompleted }" @click="showCompleted = !showCompleted">Show completed</button>
                     </div>
                 </div>
                 <div class="card-block">
@@ -51,9 +47,12 @@
             <ul class="list-group" @click="searchingUser = false">
               <li v-for="(user, userIdx) in tasks[active].users" class="list-group-item justify-content-between">
                 @{{ user.name }}
+                @if(auth()->user()->hasRole("teamlead"))
                 <button class="btn btn-outline-danger btn-sm" @click="tasks[active].users.splice(userIdx, 1)">Delete</button>
+                @endif
               </li>
             </ul>
+            @if(auth()->user()->hasRole("teamlead"))
             <div class="form-group users-ac-wrapper">
                 <input v-model="userQuery" type="text" class="form-control" placeholder="Search users"
                     @focus="searchingUser = true">
@@ -63,10 +62,15 @@
                     @click="tasks[active].users.push(user)">@{{ user.name }}</button>
                 </div>
             </div>
+            @endif
           </div>
           <div class="modal-footer">
+            @if(auth()->user()->hasRole("teamlead"))
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <button type="button" class="btn btn-primary" @click="saveAssigments()" data-dismiss="modal">Save</button>
+            @else
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            @endif
           </div>
         </div>
       </div>
