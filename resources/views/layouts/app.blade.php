@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+@php $asset = json_decode(File::get(public_path("manifest.json")),true) @endphp
+
 <html lang="{{ config('app.locale') }}">
 <head>
     <meta charset="utf-8">
@@ -12,7 +14,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <!-- Scripts -->
@@ -21,7 +22,7 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
-
+    <link rel="stylesheet" href="/{{$asset["index.css"]}}" type="text/css">
     @yield("css")
 </head>
 <body>
@@ -41,7 +42,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'Hack') }}
                 </a>
             </div>
 
@@ -90,6 +91,12 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="https://code.jquery.com/jquery-2.2.2.min.js" crossorigin="anonymous"></script>
+<script src="{{asset($asset["reactDOM.js"])}}"></script>
+<script src="{{asset($asset["react.js"])}}"></script>
+<script src="{{asset($asset["index.js"])}}"></script>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="http://localhost:35729/livereload.js"></script>
 @yield("js")
 </body>
 </html>

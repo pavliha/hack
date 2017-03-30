@@ -1,0 +1,44 @@
+@import "components/*"
+@import "theme/*";
+//@font-face {
+//  font-family: "Proxima Nova";
+//  src: url("../fonts/ProximaNova.otf");
+//}
+//
+
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css)
+html {
+  overflow-y: scroll;
+}
+
+body {
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.flex {
+  display flex;
+  flex-wrap wrap;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-center {
+  display flex;
+  align-items center;
+  justify-content center;
+  flex-wrap wrap;
+}
+
+a:hover {
+  text-decoration none
+}
+
+ul > li {
+  margin-right: 25px;
+  font-weight: lighter;
+  cursor: pointer
+}
